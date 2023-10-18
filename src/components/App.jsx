@@ -44,7 +44,7 @@ const App = () => {
   };
 
   const handleFilterChange = event => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     setFilter(value);
   };
   
