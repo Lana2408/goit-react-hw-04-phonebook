@@ -1,40 +1,40 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Label } from './ContactForm.styled';
 
 
-class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+const ContactForm = ({ onAddContact }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  handleChange = event => {
+  const handleChange = event => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    if (name === 'name') {
+      setName(value);
+    } else if (name === 'number') {
+      setNumber(value);
+    }
   };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    const { name, number } = this.state;
-
-    this.props.onAddContact(name, number);
-
-    this.setState({ name: '', number: '' });
+    onAddContact(name, number);
+    setName('');
+    setNumber('');
   };
 
-  render() {
+ 
 
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Label>
           Name:
           <input
             type="text"
             name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={name}
+            onChange={handleChange}
             required
           />
         </Label>
@@ -43,15 +43,15 @@ class ContactForm extends Component {
           <input
             type="tel"
             name="number"
-            value={this.state.number}
-            onChange={this.handleChange}
+            value={number}
+            onChange={handleChange}
             required
           />
         </Label>
         <Button type="submit">Add contact</Button>
       </Form>
     );
-  }
+
 }
 
 export default ContactForm;
